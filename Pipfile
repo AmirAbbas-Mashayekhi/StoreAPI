@@ -10,7 +10,8 @@ mysqlclient = "*"
 djangorestframework = "*"
 drf-nested-routers = "*"
 django-filter = "*"
-whitenoise = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

@@ -63,11 +63,9 @@ class CollectionAdmin(admin.ModelAdmin):
     @admin.display(ordering='products_count')
     def products_count(self, collection):
         url = (
-            reverse('admin:store_product_changelist')
-            + '?'
-            + urlencode({
-                'collection__id': str(collection.id)
-            }))
+                reverse('admin:store_product_changelist')
+                + '?'
+                + urlencode({'collection__id': str(collection.id)}))
         return format_html('<a href="{}">{} Products</a>', url, collection.products_count)
 
     def get_queryset(self, request):
@@ -78,20 +76,20 @@ class CollectionAdmin(admin.ModelAdmin):
 
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name',  'membership', 'orders']
+    list_display = ['first_name', 'last_name', 'membership', 'orders']
     list_editable = ['membership']
     list_per_page = 10
-    ordering = ['first_name', 'last_name']
+    list_select_related = ['user']
+    autocomplete_fields = ['user']
+    ordering = ['user__first_name', 'user__last_name']
     search_fields = ['first_name__istartswith', 'last_name__istartswith']
 
     @admin.display(ordering='orders_count')
     def orders(self, customer):
         url = (
-            reverse('admin:store_order_changelist')
-            + '?'
-            + urlencode({
-                'customer__id': str(customer.id)
-            }))
+                reverse('admin:store_order_changelist')
+                + '?'
+                + urlencode({'customer__id': str(customer.id)}))
         return format_html('<a href="{}">{} Orders</a>', url, customer.orders_count)
 
     def get_queryset(self, request):
